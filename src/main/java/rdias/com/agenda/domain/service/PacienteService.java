@@ -2,6 +2,7 @@ package rdias.com.agenda.domain.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rdias.com.agenda.api.mapper.PacienteMapper;
 import rdias.com.agenda.domain.entity.Paciente;
 import rdias.com.agenda.domain.repository.PacienteRepository;
 import rdias.com.agenda.exception.BusinessException;
@@ -34,6 +35,16 @@ public class PacienteService {
         }
 
         return repository.save(paciente);
+    }
+
+
+    public Paciente alterar(Long id, Paciente paciente){
+        Optional<Paciente> optionalPaciente = this.buscarPorId(id);
+        if(optionalPaciente.isEmpty()){
+            throw new BusinessException("Paciente não cadastrado");
+        }
+        paciente.setId(id);
+        return salvar(paciente);
     }
 
 

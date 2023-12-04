@@ -1,5 +1,6 @@
 package rdias.com.agenda.api.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<PacienteResponse> salvar(@RequestBody PacienteRequest request){
+    public ResponseEntity<PacienteResponse> salvar(@Valid @RequestBody PacienteRequest request){
         Paciente paciente = mapper.toPaciente(request);
         Paciente pacienteSalvo = service.salvar(paciente);
         PacienteResponse pacienteResponse = mapper.toPacienteResponse(pacienteSalvo);
@@ -53,10 +54,10 @@ public class PacienteController {
     }
 
 
-    @PutMapping
-    public ResponseEntity<PacienteResponse> alterar(@RequestBody PacienteRequest request){
+    @PutMapping("/{id}")
+    public ResponseEntity<PacienteResponse> alterar(@PathVariable Long id, @RequestBody PacienteRequest request){
         Paciente paciente = mapper.toPaciente(request);
-        Paciente pacienteSalvo = service.salvar(paciente);
+        Paciente pacienteSalvo = service.alterar(id, paciente);
         PacienteResponse pacienteResponse = mapper.toPacienteResponse(pacienteSalvo);
         return ResponseEntity.status(HttpStatus.OK).body(pacienteResponse);
     }
