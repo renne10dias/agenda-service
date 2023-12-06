@@ -1,5 +1,6 @@
 package rdias.com.agenda.api.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class AgendaController {
     }
 
     @PostMapping
-    public ResponseEntity<AgendaResponse> salvar(@RequestBody AgendaRequest request){
+    public ResponseEntity<AgendaResponse> salvar(@Valid @RequestBody AgendaRequest request){
         Agenda agenda = mapper.toAgenda(request);
         Agenda AgendaSalva = service.salvar(agenda);
         AgendaResponse agendaResponse = mapper.toAgendaResponse(AgendaSalva);

@@ -32,19 +32,15 @@ public class AgendaService {
     }
 
     public Agenda salvar(Agenda agenda) {
-        //TODO: para validar as regras de negocio
-        // 1. validar se o Paciente existe
-        // 2. validar o horario
-
-        // 1. validar se o Paciente existe
         Optional<Paciente> optPaciente = pacienteService.buscarPorId(agenda.getPaciente().getId());
+
         if (optPaciente.isEmpty()) {
             throw new BusinessException("Paciente não encontrado");
         }
 
-        // 2. validar o horario
         Optional<Agenda> optHorario = repository.findByHorario(agenda.getHorario());
-        if (optHorario.isEmpty()) {
+
+        if (optHorario.isPresent()) {
             throw new BusinessException("Já existe agendamento para este horário");
         }
 
