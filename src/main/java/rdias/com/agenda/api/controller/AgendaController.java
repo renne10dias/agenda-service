@@ -41,7 +41,6 @@ public class AgendaController {
         }
         AgendaResponse agendaResponse = mapper.toAgendaResponse(optAgenda.get());
         return ResponseEntity.status(HttpStatus.OK).body(agendaResponse);
-
     }
 
     @PostMapping
